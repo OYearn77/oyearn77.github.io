@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN,en,zh-TW,default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+    <meta name="description" content="分享技术经验、学习心得和生活感悟的个人博客">
+  
+
+  
+    <meta name="keywords" content="技术博客,编程,生活随笔,学习笔记">
+  
+
+  
+    <meta name="author" content="OYearn">
+  
+
+  
+
+  
+
+  <title>flexblock主题添加功能 | OYearn&#39;s blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.3/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/atom-one-dark.css">
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          packages: ['base', 'ams', 'noerrors', 'noundefined']
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        options: {
+          renderActions: {
+            addMenu: []
+          },
+          processHtmlClass: 'tex2jax_process|mathjax_process|math|output_area'
+        },
+        loader: {
+          load: ['[tex]/noerrors', '[tex]/noundefined']
+        }
+      };
+    </script>
+    <style>
+      /* MathJax基本样式优化 */
+      .MathJax {
+        font-size: 1.1em !important;
+      }
+      
+      /* 调整行内公式样式 */
+      .mjx-math {
+        display: inline-block !important;
+        line-height: normal !important;
+        vertical-align: middle !important;
+      }
+      
+      /* 调整块级公式样式 */
+      .MJX-Display {
+        margin: 1em 0 !important;
+        padding: 8px 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        text-align: center !important;
+        background-color: #f8f9fa !important;
+        border-radius: 5px !important;
+      }
+      
+      /* 确保公式不会被截断 */
+      .mjx-container {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        min-width: auto !important;
+        padding: 0 !important;
+        white-space: nowrap !important;
+      }
+      
+      /* 防止公式中包含的中文被隐藏 */
+      .mjx-mtext {
+        font-size: 100% !important;
+      }
+      
+      /* 确保行内公式在Markdown文本中正确对齐 */
+      p .mjx-chtml {
+        vertical-align: -0.25em !important;
+      }
+      
+      /* 添加行内公式与文本的间距 */
+      .mjx-chtml.MJXc-display {
+        margin: 1em 0 !important;
+      }
+    </style>
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    <!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url('https://s2.loli.net/2025/03/31/YWF7e3siptSnvg4.png')"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          OYearn&#39;s blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">标签</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/">更多</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="header-content">
+    <div class="post-text layout-block layout-padding">
+      
+
+      
+
+      
+
+      
+
+      
+        <div class="layout-margin">
+          <h1 class="title-wrap">flexblock主题添加功能</h1>
+          <h2 class="title-sub-wrap">
+            <strong>OYearn</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2025-03-31T13:14:48.000Z" itemprop="datePublished">2025-03-31</time>
+          </h2>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/hexo%E5%86%85%E5%AE%B9/">📒 hexo内容</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/hexo/">🏷️ hexo</a></li>
+  
+    <li><a href="/tags/flexblock/">🏷️ flexblock</a></li>
+  
+    <li><a href="/tags/%E6%A0%B7%E5%BC%8F/">🏷️ 样式</a></li>
+  
+</ul>
+        </div>
+      
+
+      
+
+      
+
+      <!-- 搜索框 -->
+      
+    </div>
+  </div>
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<!-- 文章信息区域(article-info) 侧边栏区域(widget-info) -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="增加底部跳转外部网站图标"><a href="#增加底部跳转外部网站图标" class="headerlink" title="增加底部跳转外部网站图标"></a>增加底部跳转外部网站图标</h2><p>flexblock主题会自动识别flexblock&#x2F;layout&#x2F;_svg中的social开头的图标，再与主题配置中的以下代码匹配。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">social_icon</span>:<br>  <span class="hljs-attribute">enable</span>: true<br>  <span class="hljs-attribute">icons</span>:<br>    <span class="hljs-attribute">ins</span>     :<br>    <span class="hljs-attribute">zhihu</span>   :<br>    <span class="hljs-attribute">weibo</span>   : <br>    <span class="hljs-attribute">github</span>  : https://github.com/<br>    <span class="hljs-attribute">twitter</span> : <br></code></pre></td></tr></table></figure>
+
+<p>在对应部分添加代码后即可以在网页下方自动添加跳转icon，如果想要添加新的icon可以先在某些网站下载，以我添加bilibili为例，在代码<code>twitter :</code>加上<code>bilibili :</code>，先去<a target="_blank" rel="noopener" href="https://icons8.com/">https://icons8.com/</a>下载对应的svg图标，添加到指定路径中修改名称为social-bilibili.svg，如果直接使用会发现图标显示不正确，详细看正确使用的svg和下载的svg代码如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;!--下面是正确使用的twitter图标--&gt;</span><br><span class="hljs-section">&lt;svg class=<span class="hljs-string">&quot;icon icon-twitter&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 1024 1024&quot;</span> version=<span class="hljs-string">&quot;1.1&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span><br><span class="hljs-section">&lt;path d=<span class="hljs-string">&quot;M12.997,44.001v-1H9.969  ...... &gt;&lt;/path&gt;</span></span><br><span class="hljs-string"><span class="hljs-section">&lt;/svg&gt;</span></span><br><span class="hljs-string"><span class="hljs-section"></span></span><br><span class="hljs-string"><span class="hljs-section">&lt;!--这个是我的图标--&gt;</span></span><br><span class="hljs-string"><span class="hljs-section">&lt;svg xmlns=&quot;</span>http://www.w3.org/2000/svg<span class="hljs-string">&quot; x=&quot;</span>0px<span class="hljs-string">&quot; y=&quot;</span>0px<span class="hljs-string">&quot; width=&quot;</span>800<span class="hljs-string">&quot; height=&quot;</span>800<span class="hljs-string">&quot; viewBox=&quot;</span>0 0 50 50<span class="hljs-string">&quot;&gt;</span></span><br><span class="hljs-string"><span class="hljs-section">&lt;path d=&quot;</span>M12.997,44.001v-1H9.969    ...... &gt;</span><span class="hljs-section">&lt;/path&gt;</span><br><span class="hljs-section">&lt;/svg&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>可以发现我们的svg强制规定了高度和宽度<code>width=&quot;800&quot; height=&quot;800&quot;</code>，直接用记事本打开按它的方法修改为下方，注意path不要修改。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;svg class=<span class="hljs-string">&quot;icon icon-bilibili&quot;</span> viewBox=<span class="hljs-string">&quot;0 0 50 50&quot;</span> version=<span class="hljs-string">&quot;1.1&quot;</span> xmlns=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这样在网站下方即可出现新增加的bilibili图标。<br><img src="https://s2.loli.net/2025/03/31/zg1o4L57CX9ZJvK.png" alt="QQ20250331-215115.png"><br><br></p>
+<h2 id="增加顶部nav部分的分类、标签、归档"><a href="#增加顶部nav部分的分类、标签、归档" class="headerlink" title="增加顶部nav部分的分类、标签、归档"></a>增加顶部nav部分的分类、标签、归档</h2><h3 id="添加归档"><a href="#添加归档" class="headerlink" title="添加归档"></a>添加归档</h3><p>这个主题在初始状态把这些均删除了，但是归档功能是hexo自带的功能，只需要保证在系统配置_config.yml中<code>archive_dir: archives</code>是一样的即可。</p>
+<p>在主题配置中的<code>menu:</code>中添加<code>归档: /archives</code>即可。</p>
+<h3 id="添加分类、标签"><a href="#添加分类、标签" class="headerlink" title="添加分类、标签"></a>添加分类、标签</h3><p>首先在bash中使用<code>hexo new page &quot;categories&quot;</code>，可以发现在source中新建了categories文件夹以及里面的index.md，接下来修改index.md内容为</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache">---<br><span class="hljs-attribute">title</span>: 分类<br><span class="hljs-attribute">date</span>: <span class="hljs-number">2025</span>-<span class="hljs-number">03</span>-<span class="hljs-number">30</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span><br><span class="hljs-attribute">type</span>: <span class="hljs-string">&quot;categories&quot;</span><br><span class="hljs-attribute">layout</span>: <span class="hljs-string">&quot;categories&quot;</span><br>---<br></code></pre></td></tr></table></figure>
+
+<p>在layout文件夹中添加categories.ejs文件，读者可以自行增加里面的内容，自定义页面内容，我也提供我的这部分内容</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;!-- 分类总览页面 --&gt;</span><br><span class="hljs-section">&lt;div class=<span class="hljs-string">&quot;body-container&quot;</span>&gt;</span><br>  <span class="hljs-section">&lt;div class=<span class="hljs-string">&quot;content-container layout-block&quot;</span>&gt;</span><br>    <span class="hljs-section">&lt;section class=<span class="hljs-string">&quot;layout-padding&quot;</span>&gt;</span><br>      <span class="hljs-section">&lt;div class=<span class="hljs-string">&quot;card-container content-padding--large soft-size--large soft-style--box&quot;</span>&gt;</span><br>        <span class="hljs-section">&lt;h2 class=<span class="hljs-string">&quot;card-text--title&quot;</span> style=<span class="hljs-string">&quot;margin-bottom: 20px;&quot;</span>&gt;</span>所有分类<span class="hljs-section">&lt;/h2&gt;</span><br>  <br>        <span class="hljs-section">&lt;div class=<span class="hljs-string">&quot;category-cloud-container&quot;</span>&gt;</span><br>          <span class="hljs-section">&lt;% </span><br><span class="hljs-section">            // 获取所有分类</span><br><span class="hljs-section">            var categories = site.categories.sort(&#x27;name&#x27;).map(function(category)&#123;</span><br><span class="hljs-section">              return &#123;</span><br><span class="hljs-section">                name: category.name,</span><br><span class="hljs-section">                path: url_for(category.path),</span><br><span class="hljs-section">                count: category.length</span><br><span class="hljs-section">              &#125;;</span><br><span class="hljs-section">            &#125;);</span><br><span class="hljs-section">  </span><br><span class="hljs-section">            // 计算最小和最大文章数</span><br><span class="hljs-section">            var min = 1;</span><br><span class="hljs-section">            var max = 1;</span><br><span class="hljs-section">  </span><br><span class="hljs-section">            categories.forEach(function(category)&#123;</span><br><span class="hljs-section">              min = Math.min(min, category.count);</span><br><span class="hljs-section">              max = Math.max(max, category.count);</span><br><span class="hljs-section">            &#125;);</span><br><span class="hljs-section">  </span><br><span class="hljs-section">            // 最小和最大值相同时，避免除以零</span><br><span class="hljs-section">            if (min === max) &#123;</span><br><span class="hljs-section">              max = min + 1;</span><br><span class="hljs-section">            &#125;</span><br><span class="hljs-section">  </span><br><span class="hljs-section">            // 计算每个分类的大小</span><br><span class="hljs-section">            categories.forEach(function(category)&#123;</span><br><span class="hljs-section">              var size = min === max ? 5 : Math.floor(((category.count - min) / (max - min)) * 9) + 1;</span><br><span class="hljs-section">              size = Math.min(10, Math.max(1, size)); // 确保范围在1-10之间</span><br><span class="hljs-section">  </span><br><span class="hljs-section">              // 输出分类项，添加inline-block-wrapper类</span><br><span class="hljs-section">          %&gt;</span><br>            <span class="hljs-section">&lt;span class=<span class="hljs-string">&quot;inline-block-wrapper&quot;</span>&gt;</span><br>              <span class="hljs-section">&lt;div class=<span class="hljs-string">&quot;category-item category-size-&lt;%= size %&gt;&quot;</span> style=<span class="hljs-string">&quot;height:auto;&quot;</span>&gt;</span><br>                <span class="hljs-section">&lt;a href=<span class="hljs-string">&quot;&lt;%= category.path %&gt;&quot;</span>&gt;</span><br>                  <span class="hljs-section">&lt;%= category.name %&gt;</span><br>                  <span class="hljs-section">&lt;span class=<span class="hljs-string">&quot;category-count&quot;</span>&gt;</span><span class="hljs-section">&lt;%= category.count %&gt;</span><span class="hljs-section">&lt;/span&gt;</span><br>                <span class="hljs-section">&lt;/a&gt;</span><br>              <span class="hljs-section">&lt;/div&gt;</span><br>            <span class="hljs-section">&lt;/span&gt;</span><br>          <span class="hljs-section">&lt;% &#125;); %&gt;</span><br>        <span class="hljs-section">&lt;/div&gt;</span><br>      <span class="hljs-section">&lt;/div&gt;</span><br>    <span class="hljs-section">&lt;/section&gt;</span><br>  <span class="hljs-section">&lt;/div&gt;</span><br><span class="hljs-section">&lt;/div&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>同样的要增加css样式，读者可以自行创建修改，注意要在<code>menu:</code>中添加<code>分类: /categories</code>。</p>
+<p>同样的可以这样创建tags标签总览界面，以下是我的测试tags总览页面。<br><img src="https://s2.loli.net/2025/03/31/s3MitIWKNwdgGJa.png" alt="Snipaste_2025-03-31_22-30-09.png"></p>
+<h2 id="文章页面添加TOC-目录"><a href="#文章页面添加TOC-目录" class="headerlink" title="文章页面添加TOC(目录)"></a>文章页面添加TOC(目录)</h2><p>修改scaffolds&#x2F;post.md的默认样式如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache">---<br><span class="hljs-attribute">title</span>: &#123;&#123; title &#125;&#125;<br><span class="hljs-attribute">subtitle</span>:<br><span class="hljs-attribute">date</span>: &#123;&#123; date &#125;&#125;<br><span class="hljs-attribute">categories</span>:<br><span class="hljs-attribute">tags</span>:<br><span class="hljs-attribute">cover</span>:<br><span class="hljs-attribute">toc</span>: true<br>---<br></code></pre></td></tr></table></figure>
+
+<p>其中只有在YAML格式中添加<code>toc: true</code>才能打开文章右侧目录功能，其名称为TOC，可以在themes&#x2F;flexblock&#x2F;layout&#x2F;_widget&#x2F;widget-toc中修改名称为目录。<br><img src="https://s2.loli.net/2025/04/01/ZyjbTS1CrhRJDXO.png" alt="Snipaste_2025-04-01_23-45-13.png"></p>
+<p>目录会自动收集标题h1~h6建立目录，可以调整主题配置文件调整显示的目录深度。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">toc</span>:<br>  <span class="hljs-attribute">enable</span>: true<br>  <span class="hljs-attribute">max_depth</span>: <span class="hljs-number">5</span> # 生成 TOC 的最大深度<br>  <span class="hljs-attribute">min_depth</span>: <span class="hljs-number">1</span> # 生成 TOC 的最小深度<br></code></pre></td></tr></table></figure>
+
+<h2 id="文章中添加视频"><a href="#文章中添加视频" class="headerlink" title="文章中添加视频"></a>文章中添加视频</h2><p>在markdown文件中的YAML部分添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dplayer:">dplayer: true<br></code></pre></td></tr></table></figure>
+
+<p>还需要下载hexo的视频展示插件<code>cnpm install hexo-tag-dplayer --save</code>，所有的插件会收录在package.json文件中。</p>
+<p>在markdown文件中引入视频请按照下面格式</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache">&#123;% <span class="hljs-attribute">dplayer</span> url=<span class="hljs-string">&quot;/more/案例.mp4&quot;</span> %&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="文章启用公式显示"><a href="#文章启用公式显示" class="headerlink" title="文章启用公式显示"></a>文章启用公式显示</h2><p>在markdown中使用单$包括公式展示行内代码,<strong>现在有问题请勿使用</strong></p>
+<p>使用双$$包括公式展示整行代码，示例为</p>
+<p><code>$$1+1=3$$</code></p>
+<p>实际样式展示为</p>
+<p>$$<br>1+1&#x3D;3<br>$$</p>
+<p>在配置文件中添加MathJax配置，也在<code>layout.ejs</code>中添加了MathJax基本样式。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># MathJax配置</span><br><span class="hljs-attribute">mathjax</span>:<br>  <span class="hljs-attribute">enable</span>: true<br>  <span class="hljs-attribute">per_page</span>: true<br>  <span class="hljs-attribute">cdn</span>: //cdn.jsdelivr.net/npm/mathjax@<span class="hljs-number">3</span>/es5/tex-mml-chtml.js<br>  <span class="hljs-attribute">tags</span>: none<br></code></pre></td></tr></table></figure>
+
+<p>同时在文章的YAML部分添加<code>mathjax: true</code>启用，已经在默认YAML中添加为true。</p>
+<h2 id="下载示例"><a href="#下载示例" class="headerlink" title="下载示例"></a>下载示例</h2><p><a target="_blank" rel="noopener" href="https://gitee.com/lvm1024/lvm1024/raw/master/public/Resource/DanBo.apk">点击下载</a></p>
+<h2 id="写本项目markdown注意"><a href="#写本项目markdown注意" class="headerlink" title="写本项目markdown注意"></a>写本项目markdown注意</h2><h3 id="无需列表ul下代码块插入"><a href="#无需列表ul下代码块插入" class="headerlink" title="无需列表ul下代码块插入"></a>无需列表ul下代码块插入</h3><p>不要直接换行写，须转入源代码编辑模式取消代码块的缩进，将代码块设置为正文部分，否则会出现代码换行bug。<img src="https://s2.loli.net/2025/06/10/reTQKwGnV4RWtl8.png" alt="image.png"></p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://s2.loli.net/2025/04/02/kDgnZ9hVdtvCasT.png"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2025/04/02/git%E6%93%8D%E4%BD%9C%E4%B8%8EVSCODE%E6%93%8D%E4%BD%9C/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">git操作与VSCODE操作</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://s2.loli.net/2025/03/30/QltU3DnpebBXjmO.png"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2025/03/29/hexo%E4%B8%AD%E9%85%8D%E7%BD%AEvaline%E6%B5%81%E7%A8%8B%E4%BB%A5%E5%8F%8A%E5%8F%AF%E8%83%BD%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">hexo中配置valine流程以及可能碰到的问题</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+    <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
+      <div id="valine_thread" class="valine-thread"></div>
+    </div>
+    <script type="text/javascript" src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script type="text/javascript">
+      new Valine({
+        el: "#valine_thread",
+        appId: "nGgYVf0B4sYYxbVLbrwazR9A-MdYXbMMI",
+        appKey: "9RO8q8yx18YXuABUn5Fu6pb9",
+        avatar: "monsterid",
+        placeholder: "随便说点什么叭～",
+        notify: true,
+        visitor: true,
+        pageSize: 10,
+        serverURLs: "https://nGgYVf0B.api.lncldglobal.com"  // 增加这一行！！！
+      });
+    </script>
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://i.ibb.co/Ldd4NWyw/auther-icon.jpg" class="soft-size--round soft-style--box" alt="OYearn">
+    
+    
+      <h2>OYearn</h2>
+    
+    
+      <p>I hope that leaves a mark.</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>11</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        4
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        12
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>目录</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E5%BA%95%E9%83%A8%E8%B7%B3%E8%BD%AC%E5%A4%96%E9%83%A8%E7%BD%91%E7%AB%99%E5%9B%BE%E6%A0%87"><span class="toc-number">1.</span> <span class="toc-text">增加底部跳转外部网站图标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E9%A1%B6%E9%83%A8nav%E9%83%A8%E5%88%86%E7%9A%84%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE%E3%80%81%E5%BD%92%E6%A1%A3"><span class="toc-number">2.</span> <span class="toc-text">增加顶部nav部分的分类、标签、归档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%BD%92%E6%A1%A3"><span class="toc-number">2.1.</span> <span class="toc-text">添加归档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E3%80%81%E6%A0%87%E7%AD%BE"><span class="toc-number">2.2.</span> <span class="toc-text">添加分类、标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0TOC-%E7%9B%AE%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">文章页面添加TOC(目录)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">文章中添加视频</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8%E5%85%AC%E5%BC%8F%E6%98%BE%E7%A4%BA"><span class="toc-number">5.</span> <span class="toc-text">文章启用公式显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%A4%BA%E4%BE%8B"><span class="toc-number">6.</span> <span class="toc-text">下载示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E6%9C%AC%E9%A1%B9%E7%9B%AEmarkdown%E6%B3%A8%E6%84%8F"><span class="toc-number">7.</span> <span class="toc-text">写本项目markdown注意</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%9C%80%E5%88%97%E8%A1%A8ul%E4%B8%8B%E4%BB%A3%E7%A0%81%E5%9D%97%E6%8F%92%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">无需列表ul下代码块插入</span></a></li></ol></li></ol>
+  </div>
+</section>
+
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>网页开发中，部分功能未完善</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/CCS/">
+            CCS (1)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/hexo%E5%86%85%E5%AE%B9/">
+            hexo内容 (5)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+            git基本操作 (1)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E6%A8%A1%E5%9D%97/">
+            上位机模块 (2)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/CCS/" style="font-size: 10px;" class="tags-cloud-0">CCS</a> <a href="/tags/DSP/" style="font-size: 15px;" class="tags-cloud-5">DSP</a> <a href="/tags/dplayer/" style="font-size: 10px;" class="tags-cloud-0">dplayer</a> <a href="/tags/flexblock/" style="font-size: 10px;" class="tags-cloud-0">flexblock</a> <a href="/tags/git/" style="font-size: 15px;" class="tags-cloud-5">git</a> <a href="/tags/hexo/" style="font-size: 20px;" class="tags-cloud-10">hexo</a> <a href="/tags/valine/" style="font-size: 10px;" class="tags-cloud-0">valine</a> <a href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/" style="font-size: 15px;" class="tags-cloud-5">上位机</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;" class="tags-cloud-0">插件</a> <a href="/tags/%E6%97%A0%E6%B3%95%E6%8F%90%E4%BA%A4/" style="font-size: 10px;" class="tags-cloud-0">无法提交</a> <a href="/tags/%E6%A0%B7%E5%BC%8F/" style="font-size: 10px;" class="tags-cloud-0">样式</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;" class="tags-cloud-0">部署</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<!-- 社交媒体图标区域推特等图标 链接至_svg里的图片
+版权信息 显示版权符号、当前年份和网站作者名称
+备案信息（中国特有）：如果配置了theme.beian，则显示ICP备案号并链接到工信部备案查询网站
+技术支持信息：
+显示网站由Hexo驱动，使用flex-block主题，提供主题的GitHub链接
+主题切换功能 明暗风格 -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/OYearn77" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+        
+          <a href="https://space.bilibili.com/399088173?spm_id_from=333.1007.0.0" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-bilibili" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.997,44.001v-1H9.969 c-3.3,0-5.977-2.677-5.977-5.977V17.98c0-3.299,2.677-5.977,5.977-5.977h10.612l-6.293-6.293c-0.391-0.391-0.391-1.024,0-1.415 c0.391-0.391,1.024-0.391,1.415,0l7.708,7.708h3.172l7.708-7.708c0.391-0.391,1.024-0.391,1.415,0c0.391,0.391,0.391,1.024,0,1.415 l-6.293,6.293h10.601c3.299,0,5.977,2.679,5.977,5.977v19.044c0,3.3-2.679,5.977-5.977,5.977h-3.027v1 c0,1.104-0.897,2.001-2.001,2.001c-1.103,0-2-0.897-2-2.001v-1H16.999v1c0,1.104-0.897,2.001-2,2.001 C13.895,46.003,12.997,45.105,12.997,44.001z M24.893,32.964l0.099-0.089l0.099,0.091c0.749,0.651,1.787,1.036,2.901,1.036 c1.9,0,3.569-1.124,3.977-2.757c0.135-0.535-0.192-1.079-0.728-1.212c-0.535-0.135-1.079,0.192-1.212,0.728 c-0.161,0.641-0.953,1.241-2.037,1.241c-1.081,0-1.865-0.593-2.033-1.223c-0.263-0.984-1.668-0.984-1.932-0.001 c-0.168,0.625-0.947,1.224-2.032,1.224c-1.081,0-1.88-0.604-2.04-1.241c-0.133-0.536-0.677-0.863-1.212-0.728 c-0.536,0.133-0.863,0.677-0.728,1.212c0.409,1.639,2.083,2.757,3.98,2.757C23.109,34.001,24.145,33.615,24.893,32.964z M14.315,25.951l6-2c0.523-0.175,0.807-0.741,0.632-1.265c-0.175-0.523-0.741-0.807-1.265-0.632l-6,2 c-0.523,0.175-0.807,0.741-0.632,1.265C13.224,25.841,13.791,26.125,14.315,25.951z M36.941,25.319 c0.175-0.524-0.109-1.091-0.632-1.265l-6-2c-0.524-0.175-1.091,0.109-1.265,0.632c-0.175,0.524,0.109,1.091,0.632,1.265l6,2 C36.2,26.125,36.767,25.841,36.941,25.319z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2025 <a href="/" target="_blank">OYearn</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- 如果页面配置了aplayer属性，则加载音频播放器组件
+如果页面配置了dplayer属性，则加载视频播放器组件
+统计分析工具 需要加载分析脚本 本地主机调试不加载分析脚本，而是在控制台输出"本地调试"信息 -->
+<!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/code_bush.js"></script>
+
+
+<script src="/js/image-zoom.js"></script>
+
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+  
+<script src="/js/toc-highlight.js"></script>
+
+  
+<script src="/js/table-collapse.js"></script>
+
+</body>
+</html>

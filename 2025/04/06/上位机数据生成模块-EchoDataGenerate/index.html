@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN,en,zh-TW,default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+    <meta name="description" content="分享技术经验、学习心得和生活感悟的个人博客">
+  
+
+  
+    <meta name="keywords" content="技术博客,编程,生活随笔,学习笔记">
+  
+
+  
+    <meta name="author" content="OYearn">
+  
+
+  
+
+  
+
+  <title>上位机数据生成模块[EchoDataGenerate] | OYearn&#39;s blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.3/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/atom-one-dark.css">
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          packages: ['base', 'ams', 'noerrors', 'noundefined']
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        options: {
+          renderActions: {
+            addMenu: []
+          },
+          processHtmlClass: 'tex2jax_process|mathjax_process|math|output_area'
+        },
+        loader: {
+          load: ['[tex]/noerrors', '[tex]/noundefined']
+        }
+      };
+    </script>
+    <style>
+      /* MathJax基本样式优化 */
+      .MathJax {
+        font-size: 1.1em !important;
+      }
+      
+      /* 调整行内公式样式 */
+      .mjx-math {
+        display: inline-block !important;
+        line-height: normal !important;
+        vertical-align: middle !important;
+      }
+      
+      /* 调整块级公式样式 */
+      .MJX-Display {
+        margin: 1em 0 !important;
+        padding: 8px 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        text-align: center !important;
+        background-color: #f8f9fa !important;
+        border-radius: 5px !important;
+      }
+      
+      /* 确保公式不会被截断 */
+      .mjx-container {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        min-width: auto !important;
+        padding: 0 !important;
+        white-space: nowrap !important;
+      }
+      
+      /* 防止公式中包含的中文被隐藏 */
+      .mjx-mtext {
+        font-size: 100% !important;
+      }
+      
+      /* 确保行内公式在Markdown文本中正确对齐 */
+      p .mjx-chtml {
+        vertical-align: -0.25em !important;
+      }
+      
+      /* 添加行内公式与文本的间距 */
+      .mjx-chtml.MJXc-display {
+        margin: 1em 0 !important;
+      }
+    </style>
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    <!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url('https://s2.loli.net/2025/04/07/NbyHrzVMEfLTn4K.jpg')"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          OYearn&#39;s blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+          <li class="navbar-list-item"><a href="/categories">分类</a></li>
+        
+          <li class="navbar-list-item"><a href="/tags">标签</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/">更多</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="header-content">
+    <div class="post-text layout-block layout-padding">
+      
+
+      
+
+      
+
+      
+
+      
+        <div class="layout-margin">
+          <h1 class="title-wrap">上位机数据生成模块[EchoDataGenerate]</h1>
+          <h2 class="title-sub-wrap">
+            <strong>OYearn</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2025-04-06T09:09:45.000Z" itemprop="datePublished">2025-04-06</time>
+          </h2>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E6%A8%A1%E5%9D%97/">📒 上位机模块</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/">🏷️ 上位机</a></li>
+  
+</ul>
+        </div>
+      
+
+      
+
+      
+
+      <!-- 搜索框 -->
+      
+    </div>
+  </div>
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<!-- 文章信息区域(article-info) 侧边栏区域(widget-info) -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="帧头内存与填充"><a href="#帧头内存与填充" class="headerlink" title="帧头内存与填充"></a>帧头内存与填充</h2><p>帧头为文件起始部分内容，数据生成模块最终会生成两个文件，为回波数据文件和轨迹数据文件，命名规则为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//回波数据</span><br>strFileName = str + _T(<span class="hljs-string">&quot;\\MIMO_2T2R_ECHO_&quot;</span>) + tm.Format(_T(<span class="hljs-string">&quot;%Y%m%d_%H%M%S&quot;</span>)) + _T(<span class="hljs-string">&quot;.dat&quot;</span>);<br><span class="hljs-comment">//轨迹数据</span><br>strFileName = str + _T(<span class="hljs-string">&quot;\\MIMO_2T2R_TRACE_&quot;</span>) + tm.Format(_T(<span class="hljs-string">&quot;%Y%m%d_%H%M%S&quot;</span>)) + _T(<span class="hljs-string">&quot;.dat&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>这个部分由以下结构体组成，具体变量名意义见<code>mwRadarCtrlComm.h</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tagFrameFileHead</span></span><br><span class="hljs-class">&#123;</span><br>	tagFrameFileHead(): wHeadId1(<span class="hljs-number">0x0000</span>), wHeadId2(<span class="hljs-number">0x7777</span>), wHeadId3(<span class="hljs-number">0xBC1C</span>), wWorkModeChNum(<span class="hljs-number">0</span>), wADChSel(<span class="hljs-number">0</span>), wDAChSel(<span class="hljs-number">0</span>), dwADf1Check1(<span class="hljs-number">0</span>),<br>		dwADf2Check1(<span class="hljs-number">0</span>), dwADf1Check2(<span class="hljs-number">0</span>), dwADf2Check2(<span class="hljs-number">0</span>), dwADf1Check3(<span class="hljs-number">0</span>), dwADf2Check3(<span class="hljs-number">0</span>), dwADf1Check4(<span class="hljs-number">0</span>), dwADf2Check4(<span class="hljs-number">0</span>), dwADf1Check5(<span class="hljs-number">0</span>), dwADf2Check5(<span class="hljs-number">0</span>),<br>		dwADf1Check6(<span class="hljs-number">0</span>), dwADf2Check6(<span class="hljs-number">0</span>), dwADf1Check7(<span class="hljs-number">0</span>), dwADf2Check7(<span class="hljs-number">0</span>), dwADf1Check8(<span class="hljs-number">0</span>), dwADf2Check8(<span class="hljs-number">0</span>), dwADf1Check9(<span class="hljs-number">0</span>), dwADf2Check9(<span class="hljs-number">0</span>), dwADf1Check10(<span class="hljs-number">0</span>), dwADf2Check10(<span class="hljs-number">0</span>),<br>		dwADf1Check11(<span class="hljs-number">0</span>), dwADf2Check11(<span class="hljs-number">0</span>), dwADf1Check12(<span class="hljs-number">0</span>), dwADf2Check12(<span class="hljs-number">0</span>), wRsv1(<span class="hljs-number">0</span>), wRsv2(<span class="hljs-number">0</span>), wLRPulsePRTWidth(<span class="hljs-number">0</span>), wMRPulsePRTWidth(<span class="hljs-number">0</span>), wSRPulsePRTWidth(<span class="hljs-number">0</span>), wLLRPulsePRTWidth(<span class="hljs-number">0</span>),<br>		wLRCpiPulseNum(<span class="hljs-number">0</span>), wMRCpiPulseNum(<span class="hljs-number">0</span>), wSRCpiPulseNum(<span class="hljs-number">0</span>), wLLRCpiPulseNum(<span class="hljs-number">0</span>), wLRCpiNum(<span class="hljs-number">0</span>), wMRCpiNum(<span class="hljs-number">0</span>), wSRCpiNum(<span class="hljs-number">0</span>),<br>		wLLRCpiNum(<span class="hljs-number">0</span>), wPulsePRTWidthPD(<span class="hljs-number">0</span>), wCpiPulseNumPD(<span class="hljs-number">0</span>), wCpiSendInterv(<span class="hljs-number">0</span>), wCellNum(<span class="hljs-number">0</span>), dwDSNR(<span class="hljs-number">0</span>), wWinNum(<span class="hljs-number">0</span>), wRsv3(<span class="hljs-number">0</span>), wRsv4(<span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-built_in">memset</span>(wWaveGate, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(WORD) * SERIAL_REPORT_WAVE_GATE_LEN);<br>	&#125;<br></code></pre></td></tr></table></figure>
+
+<p>总共包含27个单独WORD变量和1个由数组组成的变量包含20个WORD，和25个DWORD变量，其中WORD为2Byte、DWORD为4Byte，整个帧头内存大小为194Byte。</p>
+<p>其中为了更大程度的存储相关参数将多个参数进行拼合组成1个WORD&#x2F;DWORD进行存储，如下面通过左移操作存储空&#x2F;线馈（bit15-14 TRUE为空馈）、波形参数（bit13-12 TRUE为PD 、FALSE为PC）、主从DYT（bit11-10）、PC雷达参数种类（bit9-8）、延时误差（bit7-0）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">FileHead.wRsv1 = (m_SceneParam.bKongXianKui &lt;&lt; <span class="hljs-number">14</span>) | (m_SceneParam.bWaveForm &lt;&lt; <span class="hljs-number">12</span>) | ((m_SceneParam.iLeadSeeker - <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-number">10</span>) | ((m_SceneParam.iParamNum - <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-number">8</span>) | (INT(m_ErrorParam.fSitaErr) &amp; <span class="hljs-number">0x00ff</span>);<br></code></pre></td></tr></table></figure>
+
+<p>以下将单个通道的接收矫正参数的实虚部(short类型)存储在一个DWORD上，f1和f2为雷达1、2。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">FileHead.dwADf1Check1 = (m_RecvCheckParam1.iADCheckf1ReParam1 &lt;&lt; <span class="hljs-number">16</span>) | m_RecvCheckParam1.iADCheckf1ImParam1;<br>FileHead.dwADf2Check1 = (m_RecvCheckParam1.iADCheckf2ReParam1 &lt;&lt; <span class="hljs-number">16</span>) | m_RecvCheckParam1.iADCheckf2ImParam1;<br></code></pre></td></tr></table></figure>
+
+<p>为区分回波文件和轨迹文件，将轨迹文件帧头的<code>wHeadId1(0x0000)</code>修改为<code>wHeadId1(0x0001)</code></p>
+<h2 id="配置相控阵天线"><a href="#配置相控阵天线" class="headerlink" title="配置相控阵天线"></a>配置相控阵天线</h2><p>目标：配置了一个4×4的相控阵天线，计算了12个阵元的位置，并根据目标的俯仰角和方位角计算了相位权重</p>
+<p>设置阵元间距为半波长，行间距为2倍的波长，阵元将使用行间距进行分列排布，如1与2间的间隔为2λ，计算相位权重实现波束形成。<img src="https://s2.loli.net/2025/04/07/lcThgudiqF8RAy4.png" alt="QQ20250407-094134.png"></p>
+<h2 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h2><p>根据信噪比确定编码位深度</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">if</span> ((m_WaveParam.iSNR &gt;= -<span class="hljs-number">20</span>) &amp;&amp; (m_WaveParam.iSNR &lt; -<span class="hljs-number">10</span>))  N = <span class="hljs-number">13</span>;<br><span class="hljs-attribute">else</span> if ((m_WaveParam.iSNR &gt;= -<span class="hljs-number">10</span>) &amp;&amp; (m_WaveParam.iSNR &lt; <span class="hljs-number">0</span>))  N = <span class="hljs-number">14</span>;<br><span class="hljs-attribute">else</span> if (m_WaveParam.iSNR &gt;= <span class="hljs-number">0</span>)  N = <span class="hljs-number">15</span>;<br></code></pre></td></tr></table></figure>
+
+<p>量化编码代码为 <code>sEncod1 = (SHORT)(ldEcho1 * pow(2.0, N) / 3)</code>，如果 N &#x3D; 14，则缩放因子为 2^14 &#x3D; 16384。如果 ldEcho1 的值为 0.5，则编码后的值为：0.5 * 16384 &#x2F; 3 约等于 2731，&#x2F;3 是因为两个 cos 信号的和加上噪声最大峰值为 3，编码后的值范围在 ±(2^N)&#x2F;3 左右。</p>
+<p>为四种模式(超长、长、中、短)创建时间向量，从 -ldLLRTe&#x2F;2 （脉冲中心前的半个脉冲宽度）开始，在 ldLLRTr - ldLLRTe&#x2F;2 - m_ldTs （脉冲重复时间减去半个脉冲宽度）结束，以 m_ldTs （采样周期）递增，计算这四个模式的相关参数</p>
+<p>根据目标距离的变化进行模式选择，中短脉冲切换设置为1.65km，长中脉冲切换设置为4.2km，切换时也将相关参数重新赋值进行新的计算</p>
+<p>添加位置误差并记录雷达和目标位置–&gt;计算雷达和目标之间的径向速度–&gt;计算四种发射接收组合的延时–&gt;将时间延时转换为采样点延时–&gt;基于延时与相位权重生成信号–&gt;更新位置</p>
+<h2 id="信号的生成与格式设计"><a href="#信号的生成与格式设计" class="headerlink" title="信号的生成与格式设计"></a>信号的生成与格式设计</h2><h3 id="计算波门函数"><a href="#计算波门函数" class="headerlink" title="计算波门函数"></a>计算波门函数</h3><p>计算有效接收窗口</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">if</span> (fabs(m_T0[i] - delay_1t1r) &lt; ldTe / <span class="hljs-number">2</span>) bGate1 = <span class="hljs-number">1</span>; else bGate1 = <span class="hljs-number">0</span>;<br><span class="hljs-attribute">if</span> (fabs(m_T0[i] - delay_2t1r) &lt; ldTe / <span class="hljs-number">2</span>) bGate21 = <span class="hljs-number">1</span>; else bGate21 = <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache">                    |<span class="hljs-section">&lt;---- ldTe ----&gt;</span>|<br>                    |                |<br>                    |                |<br>时间轴 -------------|----------------|------------------&gt;<br>                    |                |<br>          <span class="hljs-attribute">delay_1t1r</span>- ldTe/<span class="hljs-number">2</span>      delay_1t1r + ldTe/<span class="hljs-number">2</span><br><br>                    |<span class="hljs-section">&lt;---有效接收窗口---&gt;</span>|<br>                    |                   |<br><span class="hljs-attribute">bGate1</span>值：    <span class="hljs-number">0</span> ... <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> ...<br></code></pre></td></tr></table></figure>
+
+<h3 id="接收信号合成"><a href="#接收信号合成" class="headerlink" title="接收信号合成"></a>接收信号合成</h3><p>在每个波门内采样点逐点计算2接收信号求和后加噪，对 ldEcho1 进行量化编码</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ldData1</span> = bGate1 * cos(<span class="hljs-number">2</span> * pi * m_WaveParam.ldCf1 * m_T0[i] + pi * m_ldMu * (m_T0[i] - delay_1t1r) * (m_T0[i] - delay_1t1r) - <span class="hljs-number">2</span> * pi * m_WaveParam.ldCF1 * delay_1t1r_F + aPw);<br><span class="hljs-attribute">ldData21</span> = bGate21 * cos(<span class="hljs-number">2</span> * pi * m_WaveParam.ldCf2 * m_T0[i] + pi * m_ldMu * (m_T0[i] - delay_2t1r) * (m_T0[i] - delay_2t1r) - <span class="hljs-number">2</span> * pi * m_WaveParam.ldCF2 * delay_2t1r_F + aPw);<br><span class="hljs-attribute">ldEcho1</span> = ldData1 + ldData21;<br><span class="hljs-attribute">dNoise1</span> = <span class="hljs-number">0</span>.<span class="hljs-number">707</span> * u(e);//归一化噪声<br><span class="hljs-attribute">ldEcho1</span> = ldEcho1 + dNoise1 / dAs_An;//加噪声<br></code></pre></td></tr></table></figure>
+
+<h3 id="缓存区格式设计"><a href="#缓存区格式设计" class="headerlink" title="缓存区格式设计"></a>缓存区格式设计</h3><p>每两个采样点进行一次大循环，一个大循环内有两个小循环。其中每个采样点根据通道得到的回波结果根据特殊奇偶构造填充在缓存区内。在偶数阵元上每次填充完1个short指针向后移动一个short进而填充后面奇数阵元的1个short，之后指针向后移动3个short，这中间有2个short空位留存。按照这个流程填充完1个采样点在12个通道的结果。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache">循环<span class="hljs-attribute">1</span>（假设从位置<span class="hljs-number">0</span>开始）:<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+<br>| <span class="hljs-attribute">0</span> | <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span> | <span class="hljs-number">4</span> | <span class="hljs-number">5</span> | <span class="hljs-number">6</span> | <span class="hljs-number">7</span> | <span class="hljs-number">8</span> | <span class="hljs-number">9</span> |<span class="hljs-number">10</span> |<span class="hljs-number">11</span> |<span class="hljs-number">12</span> |<span class="hljs-number">13</span> |<span class="hljs-number">14</span> |<span class="hljs-number">15</span> |<span class="hljs-number">16</span> |<span class="hljs-number">17</span> |<span class="hljs-number">18</span> |<span class="hljs-number">19</span> |...<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+<br>|<span class="hljs-attribute">E0</span> |E1 |   |   |E2 |E3 |   |   |E4 |E5 |   |   |E6 |E7 |   |   |E8 |E9 |   |   |...<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+                            <br></code></pre></td></tr></table></figure>
+
+<p>在填充最后一个采样点后根据flag轮换变换判断指针前进后退，此时还在大循环中，指针向前移动19个short开始填充第二个采样点，此时指针在2号位置前方，按照刚刚的流程填充完成第二个采样点，此时0-23号位均被填充完毕，离开大循环指针向后移动1个short开始新一轮大循环。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache">循环<span class="hljs-attribute">2</span>:<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+<br>| <span class="hljs-attribute">0</span> | <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span> | <span class="hljs-number">4</span> | <span class="hljs-number">5</span> | <span class="hljs-number">6</span> | <span class="hljs-number">7</span> | <span class="hljs-number">8</span> | <span class="hljs-number">9</span> |<span class="hljs-number">10</span> |<span class="hljs-number">11</span> |<span class="hljs-number">12</span> |<span class="hljs-number">13</span> |<span class="hljs-number">14</span> |<span class="hljs-number">15</span> |<span class="hljs-number">16</span> |<span class="hljs-number">17</span> |<span class="hljs-number">18</span> |<span class="hljs-number">19</span> |...<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+<br>|<span class="hljs-attribute">E0</span> |E1 | H0| H1|E2 |E3 | H2| H3|E4 |E5 | H4|H5 | E6|E7 | H6| H7|E8 |E9 | H8| H9|...<br>+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+<br></code></pre></td></tr></table></figure>
+
+<p>将上面的过程图示化展示成最终格式样式<img src="https://s2.loli.net/2025/04/07/XeIiSKgmholqaWd.jpg" alt="上位机波形生成格式.jpg"></p>
+<p>一个cpi的排列形式如下，主从导引头分别存储一个cpi的回波数据<img src="https://s2.loli.net/2025/04/07/f6cCrRw18yoIhKu.png" alt="QQ20250407-112631.png"></p>
+<h2 id="回波大小"><a href="#回波大小" class="headerlink" title="回波大小"></a>回波大小</h2><ul>
+<li><p>DA采样率为400MHz</p>
+</li>
+<li><p>4模式脉冲的开窗倍数均为1.6</p>
+</li>
+<li><p>对于短脉冲，1个prt的采样点为</p>
+<p>$$<br>4\mathrm{us} \times 400\mathrm{MHz} \times 1.6 &#x3D; 2560\mathrm{点}<br>$$</p>
+</li>
+<li><p>则1个prt，中脉冲采样点为6400点，长脉冲采样点为16000点</p>
+</li>
+<li><p>对于短脉冲一个CPI的大小为</p>
+<p>$$<br>2560\mathrm{点} \times 1024\mathrm{(prt)} \times 12\mathrm{(通道数)} \times 2\mathrm{Byte}&#x2F;\mathrm{点} &#x3D; 62914560\mathrm{Byte} &#x3D; 60\mathrm{MB}<br>$$</p>
+</li>
+<li><p>同理一个CPI，中脉冲大小为150MB，长脉冲大小为375MB。</p>
+</li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://s2.loli.net/2025/04/10/tXdQ42sZ3Y9hITA.jpg"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2025/04/10/hexo%E9%80%9A%E8%BF%87github%E9%83%A8%E7%BD%B2%E4%BB%A5%E5%8F%8A%E5%8D%95%E5%B7%A5%E7%A8%8B%E5%AF%B9%E5%BA%94%E5%A4%9A%E4%B8%AA%E8%BF%9C%E7%AB%AF%E4%BB%93%E5%BA%93/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">hexo通过github部署以及单工程对应多个远端仓库</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2025/04/06/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E5%AD%A6%E4%B9%A0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">上位机学习</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+    <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
+      <div id="valine_thread" class="valine-thread"></div>
+    </div>
+    <script type="text/javascript" src="//code.bdstatic.com/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script type="text/javascript">
+      new Valine({
+        el: "#valine_thread",
+        appId: "nGgYVf0B4sYYxbVLbrwazR9A-MdYXbMMI",
+        appKey: "9RO8q8yx18YXuABUn5Fu6pb9",
+        avatar: "monsterid",
+        placeholder: "随便说点什么叭～",
+        notify: true,
+        visitor: true,
+        pageSize: 10,
+        serverURLs: "https://nGgYVf0B.api.lncldglobal.com"  // 增加这一行！！！
+      });
+    </script>
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://i.ibb.co/Ldd4NWyw/auther-icon.jpg" class="soft-size--round soft-style--box" alt="OYearn">
+    
+    
+      <h2>OYearn</h2>
+    
+    
+      <p>I hope that leaves a mark.</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>11</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        4
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        12
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>目录</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A7%E5%A4%B4%E5%86%85%E5%AD%98%E4%B8%8E%E5%A1%AB%E5%85%85"><span class="toc-number">1.</span> <span class="toc-text">帧头内存与填充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%9B%B8%E6%8E%A7%E9%98%B5%E5%A4%A9%E7%BA%BF"><span class="toc-number">2.</span> <span class="toc-text">配置相控阵天线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%B5%81%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">主要流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E6%A0%BC%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.</span> <span class="toc-text">信号的生成与格式设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%B3%A2%E9%97%A8%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">计算波门函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7%E5%90%88%E6%88%90"><span class="toc-number">4.2.</span> <span class="toc-text">接收信号合成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%8C%BA%E6%A0%BC%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.3.</span> <span class="toc-text">缓存区格式设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E6%B3%A2%E5%A4%A7%E5%B0%8F"><span class="toc-number">5.</span> <span class="toc-text">回波大小</span></a></li></ol>
+  </div>
+</section>
+
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>网页开发中，部分功能未完善</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/CCS/">
+            CCS (1)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/hexo%E5%86%85%E5%AE%B9/">
+            hexo内容 (5)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+            git基本操作 (1)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/%E4%B8%8A%E4%BD%8D%E6%9C%BA%E6%A8%A1%E5%9D%97/">
+            上位机模块 (2)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/CCS/" style="font-size: 10px;" class="tags-cloud-0">CCS</a> <a href="/tags/DSP/" style="font-size: 15px;" class="tags-cloud-5">DSP</a> <a href="/tags/dplayer/" style="font-size: 10px;" class="tags-cloud-0">dplayer</a> <a href="/tags/flexblock/" style="font-size: 10px;" class="tags-cloud-0">flexblock</a> <a href="/tags/git/" style="font-size: 15px;" class="tags-cloud-5">git</a> <a href="/tags/hexo/" style="font-size: 20px;" class="tags-cloud-10">hexo</a> <a href="/tags/valine/" style="font-size: 10px;" class="tags-cloud-0">valine</a> <a href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/" style="font-size: 15px;" class="tags-cloud-5">上位机</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 10px;" class="tags-cloud-0">插件</a> <a href="/tags/%E6%97%A0%E6%B3%95%E6%8F%90%E4%BA%A4/" style="font-size: 10px;" class="tags-cloud-0">无法提交</a> <a href="/tags/%E6%A0%B7%E5%BC%8F/" style="font-size: 10px;" class="tags-cloud-0">样式</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 10px;" class="tags-cloud-0">部署</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<!-- 社交媒体图标区域推特等图标 链接至_svg里的图片
+版权信息 显示版权符号、当前年份和网站作者名称
+备案信息（中国特有）：如果配置了theme.beian，则显示ICP备案号并链接到工信部备案查询网站
+技术支持信息：
+显示网站由Hexo驱动，使用flex-block主题，提供主题的GitHub链接
+主题切换功能 明暗风格 -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/OYearn77" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+        
+          <a href="https://space.bilibili.com/399088173?spm_id_from=333.1007.0.0" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-bilibili" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12.997,44.001v-1H9.969 c-3.3,0-5.977-2.677-5.977-5.977V17.98c0-3.299,2.677-5.977,5.977-5.977h10.612l-6.293-6.293c-0.391-0.391-0.391-1.024,0-1.415 c0.391-0.391,1.024-0.391,1.415,0l7.708,7.708h3.172l7.708-7.708c0.391-0.391,1.024-0.391,1.415,0c0.391,0.391,0.391,1.024,0,1.415 l-6.293,6.293h10.601c3.299,0,5.977,2.679,5.977,5.977v19.044c0,3.3-2.679,5.977-5.977,5.977h-3.027v1 c0,1.104-0.897,2.001-2.001,2.001c-1.103,0-2-0.897-2-2.001v-1H16.999v1c0,1.104-0.897,2.001-2,2.001 C13.895,46.003,12.997,45.105,12.997,44.001z M24.893,32.964l0.099-0.089l0.099,0.091c0.749,0.651,1.787,1.036,2.901,1.036 c1.9,0,3.569-1.124,3.977-2.757c0.135-0.535-0.192-1.079-0.728-1.212c-0.535-0.135-1.079,0.192-1.212,0.728 c-0.161,0.641-0.953,1.241-2.037,1.241c-1.081,0-1.865-0.593-2.033-1.223c-0.263-0.984-1.668-0.984-1.932-0.001 c-0.168,0.625-0.947,1.224-2.032,1.224c-1.081,0-1.88-0.604-2.04-1.241c-0.133-0.536-0.677-0.863-1.212-0.728 c-0.536,0.133-0.863,0.677-0.728,1.212c0.409,1.639,2.083,2.757,3.98,2.757C23.109,34.001,24.145,33.615,24.893,32.964z M14.315,25.951l6-2c0.523-0.175,0.807-0.741,0.632-1.265c-0.175-0.523-0.741-0.807-1.265-0.632l-6,2 c-0.523,0.175-0.807,0.741-0.632,1.265C13.224,25.841,13.791,26.125,14.315,25.951z M36.941,25.319 c0.175-0.524-0.109-1.091-0.632-1.265l-6-2c-0.524-0.175-1.091,0.109-1.265,0.632c-0.175,0.524,0.109,1.091,0.632,1.265l6,2 C36.2,26.125,36.767,25.841,36.941,25.319z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2025 <a href="/" target="_blank">OYearn</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- 如果页面配置了aplayer属性，则加载音频播放器组件
+如果页面配置了dplayer属性，则加载视频播放器组件
+统计分析工具 需要加载分析脚本 本地主机调试不加载分析脚本，而是在控制台输出"本地调试"信息 -->
+<!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/code_bush.js"></script>
+
+
+<script src="/js/image-zoom.js"></script>
+
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+  
+<script src="/js/toc-highlight.js"></script>
+
+  
+<script src="/js/table-collapse.js"></script>
+
+</body>
+</html>
